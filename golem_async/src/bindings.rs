@@ -16,13 +16,6 @@ pub mod exports {
                 use super::super::super::super::_rt;
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
-                pub unsafe fn _export_start_cabi<T: Guest>() {
-                    #[cfg(target_arch = "wasm32")]
-                    _rt::run_ctors_once();
-                    T::start();
-                }
-                #[doc(hidden)]
-                #[allow(non_snake_case)]
                 pub unsafe fn _export_add_cabi<T: Guest>(arg0: i64) {
                     #[cfg(target_arch = "wasm32")]
                     _rt::run_ctors_once();
@@ -36,20 +29,23 @@ pub mod exports {
                     let result0 = T::get();
                     _rt::as_i64(result0)
                 }
+                #[doc(hidden)]
+                #[allow(non_snake_case)]
+                pub unsafe fn _export_run_all_tasks_cabi<T: Guest>() {
+                    #[cfg(target_arch = "wasm32")]
+                    _rt::run_ctors_once();
+                    T::run_all_tasks();
+                }
                 pub trait Guest {
-                    fn start();
                     fn add(value: u64);
                     fn get() -> u64;
+                    fn run_all_tasks();
                 }
                 #[doc(hidden)]
 
                 macro_rules! __export_golem_component_api_cabi{
     ($ty:ident with_types_in $($path_to_types:tt)*) => (const _: () = {
 
-      #[export_name = "golem:component/api#start"]
-      unsafe extern "C" fn export_start() {
-        $($path_to_types)*::_export_start_cabi::<$ty>()
-      }
       #[export_name = "golem:component/api#add"]
       unsafe extern "C" fn export_add(arg0: i64,) {
         $($path_to_types)*::_export_add_cabi::<$ty>(arg0)
@@ -57,6 +53,10 @@ pub mod exports {
       #[export_name = "golem:component/api#get"]
       unsafe extern "C" fn export_get() -> i64 {
         $($path_to_types)*::_export_get_cabi::<$ty>()
+      }
+      #[export_name = "golem:component/api#run-all-tasks"]
+      unsafe extern "C" fn export_run_all_tasks() {
+        $($path_to_types)*::_export_run_all_tasks_cabi::<$ty>()
       }
     };);
   }
@@ -133,13 +133,13 @@ pub(crate) use __export_golem_async_impl as export;
 #[cfg(target_arch = "wasm32")]
 #[link_section = "component-type:wit-bindgen:0.25.0:golem-async:encoded world"]
 #[doc(hidden)]
-pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 242] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07q\x01A\x02\x01A\x02\x01\
-B\x06\x01@\0\x01\0\x04\0\x05start\x01\0\x01@\x01\x05valuew\x01\0\x04\0\x03add\x01\
-\x01\x01@\0\0w\x04\0\x03get\x01\x02\x04\x01\x13golem:component/api\x05\0\x04\x01\
-\x1bgolem:component/golem-async\x04\0\x0b\x11\x01\0\x0bgolem-async\x03\0\0\0G\x09\
-producers\x01\x0cprocessed-by\x02\x0dwit-component\x070.208.1\x10wit-bindgen-rus\
-t\x060.25.0";
+pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 250] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07y\x01A\x02\x01A\x02\x01\
+B\x06\x01@\x01\x05valuew\x01\0\x04\0\x03add\x01\0\x01@\0\0w\x04\0\x03get\x01\x01\
+\x01@\0\x01\0\x04\0\x0drun-all-tasks\x01\x02\x04\x01\x13golem:component/api\x05\0\
+\x04\x01\x1bgolem:component/golem-async\x04\0\x0b\x11\x01\0\x0bgolem-async\x03\0\
+\0\0G\x09producers\x01\x0cprocessed-by\x02\x0dwit-component\x070.208.1\x10wit-bi\
+ndgen-rust\x060.25.0";
 
 #[inline(never)]
 #[doc(hidden)]

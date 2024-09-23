@@ -1,7 +1,6 @@
 mod bindings;
 
 use crate::bindings::exports::golem::component::api::*;
-use golem_rust::bindings::wasi;
 use futures_signals::signal::{Mutable, SignalExt};
 use std::sync::LazyLock;
 
@@ -22,15 +21,6 @@ static STATE: LazyLock<State> = LazyLock::new(|| {
 struct Component;
 
 impl Guest for Component {
-    fn start() {
-        println!("Loop started!");
-        loop {
-            wasi::clocks::monotonic_clock::subscribe_duration(2_000_000_000).block();
-            println!("iteration!");
-            task::run_all();
-        }
-    }
-
     fn add(value: u64) {
         *STATE.total.lock_mut() += value;
     }
@@ -38,6 +28,10 @@ impl Guest for Component {
     fn get() -> u64 {
         let total = STATE.total.get();
         total
+    }
+
+    fn run_all_tasks() {
+        task::run_all();
     }
 }
 
