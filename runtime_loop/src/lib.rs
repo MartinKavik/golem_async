@@ -11,7 +11,7 @@ impl Guest for Component {
         let golem_async_worker = ApiGolemAsync::new(&GolemRpcUri {
             value: "worker://golem_async/golem_async_1".to_owned()
         });
-        println!("Loop started!");
+        println!("Loop starting!");
         loop {
             wasi::clocks::monotonic_clock::subscribe_duration(2_000_000_000).block();
             println!("calling 'run_all_tasks()' ...");
