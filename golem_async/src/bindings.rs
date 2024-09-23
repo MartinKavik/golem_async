@@ -16,49 +16,52 @@ pub mod exports {
                 use super::super::super::super::_rt;
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
-                pub unsafe fn _export_start_cabi<T: Guest>() -> *mut u8 {
+                pub unsafe fn _export_start_cabi<T: Guest>() {
                     #[cfg(target_arch = "wasm32")]
                     _rt::run_ctors_once();
-                    let result0 = T::start();
-                    let ptr1 = _RET_AREA.0.as_mut_ptr().cast::<u8>();
-                    let vec2 = (result0.into_bytes()).into_boxed_slice();
-                    let ptr2 = vec2.as_ptr().cast::<u8>();
-                    let len2 = vec2.len();
-                    ::core::mem::forget(vec2);
-                    *ptr1.add(4).cast::<usize>() = len2;
-                    *ptr1.add(0).cast::<*mut u8>() = ptr2.cast_mut();
-                    ptr1
+                    T::start();
                 }
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
-                pub unsafe fn __post_return_start<T: Guest>(arg0: *mut u8) {
-                    let l0 = *arg0.add(0).cast::<*mut u8>();
-                    let l1 = *arg0.add(4).cast::<usize>();
-                    _rt::cabi_dealloc(l0, l1, 1);
+                pub unsafe fn _export_add_cabi<T: Guest>(arg0: i64) {
+                    #[cfg(target_arch = "wasm32")]
+                    _rt::run_ctors_once();
+                    T::add(arg0 as u64);
+                }
+                #[doc(hidden)]
+                #[allow(non_snake_case)]
+                pub unsafe fn _export_get_cabi<T: Guest>() -> i64 {
+                    #[cfg(target_arch = "wasm32")]
+                    _rt::run_ctors_once();
+                    let result0 = T::get();
+                    _rt::as_i64(result0)
                 }
                 pub trait Guest {
-                    fn start() -> _rt::String;
+                    fn start();
+                    fn add(value: u64);
+                    fn get() -> u64;
                 }
                 #[doc(hidden)]
 
                 macro_rules! __export_golem_component_api_cabi{
-        ($ty:ident with_types_in $($path_to_types:tt)*) => (const _: () = {
+    ($ty:ident with_types_in $($path_to_types:tt)*) => (const _: () = {
 
-          #[export_name = "golem:component/api#start"]
-          unsafe extern "C" fn export_start() -> *mut u8 {
-            $($path_to_types)*::_export_start_cabi::<$ty>()
-          }
-          #[export_name = "cabi_post_golem:component/api#start"]
-          unsafe extern "C" fn _post_return_start(arg0: *mut u8,) {
-            $($path_to_types)*::__post_return_start::<$ty>(arg0)
-          }
-        };);
+      #[export_name = "golem:component/api#start"]
+      unsafe extern "C" fn export_start() {
+        $($path_to_types)*::_export_start_cabi::<$ty>()
       }
+      #[export_name = "golem:component/api#add"]
+      unsafe extern "C" fn export_add(arg0: i64,) {
+        $($path_to_types)*::_export_add_cabi::<$ty>(arg0)
+      }
+      #[export_name = "golem:component/api#get"]
+      unsafe extern "C" fn export_get() -> i64 {
+        $($path_to_types)*::_export_get_cabi::<$ty>()
+      }
+    };);
+  }
                 #[doc(hidden)]
                 pub(crate) use __export_golem_component_api_cabi;
-                #[repr(align(4))]
-                struct _RetArea([::core::mem::MaybeUninit<u8>; 8]);
-                static mut _RET_AREA: _RetArea = _RetArea([::core::mem::MaybeUninit::uninit(); 8]);
             }
         }
     }
@@ -69,16 +72,34 @@ mod _rt {
     pub fn run_ctors_once() {
         wit_bindgen_rt::run_ctors_once();
     }
-    pub unsafe fn cabi_dealloc(ptr: *mut u8, size: usize, align: usize) {
-        if size == 0 {
-            return;
-        }
-        let layout = alloc::Layout::from_size_align_unchecked(size, align);
-        alloc::dealloc(ptr as *mut u8, layout);
+
+    pub fn as_i64<T: AsI64>(t: T) -> i64 {
+        t.as_i64()
     }
-    pub use alloc_crate::alloc;
-    pub use alloc_crate::string::String;
-    extern crate alloc as alloc_crate;
+
+    pub trait AsI64 {
+        fn as_i64(self) -> i64;
+    }
+
+    impl<'a, T: Copy + AsI64> AsI64 for &'a T {
+        fn as_i64(self) -> i64 {
+            (*self).as_i64()
+        }
+    }
+
+    impl AsI64 for i64 {
+        #[inline]
+        fn as_i64(self) -> i64 {
+            self as i64
+        }
+    }
+
+    impl AsI64 for u64 {
+        #[inline]
+        fn as_i64(self) -> i64 {
+            self as i64
+        }
+    }
 }
 
 /// Generates `#[no_mangle]` functions to export the specified type as the
@@ -112,9 +133,10 @@ pub(crate) use __export_golem_async_impl as export;
 #[cfg(target_arch = "wasm32")]
 #[link_section = "component-type:wit-bindgen:0.25.0:golem-async:encoded world"]
 #[doc(hidden)]
-pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 209] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07P\x01A\x02\x01A\x02\x01\
-B\x02\x01@\0\0s\x04\0\x05start\x01\0\x04\x01\x13golem:component/api\x05\0\x04\x01\
+pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 242] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07q\x01A\x02\x01A\x02\x01\
+B\x06\x01@\0\x01\0\x04\0\x05start\x01\0\x01@\x01\x05valuew\x01\0\x04\0\x03add\x01\
+\x01\x01@\0\0w\x04\0\x03get\x01\x02\x04\x01\x13golem:component/api\x05\0\x04\x01\
 \x1bgolem:component/golem-async\x04\0\x0b\x11\x01\0\x0bgolem-async\x03\0\0\0G\x09\
 producers\x01\x0cprocessed-by\x02\x0dwit-component\x070.208.1\x10wit-bindgen-rus\
 t\x060.25.0";

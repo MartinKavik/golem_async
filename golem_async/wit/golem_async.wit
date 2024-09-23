@@ -3,7 +3,9 @@ package golem:component;
 // See https://component-model.bytecodealliance.org/design/wit.html for more details about the WIT syntax
 
 interface api {
-  start: func() -> string;
+  start: func();
+  add: func(value: u64);
+  get: func() -> u64;
 }
 
 world golem-async {
