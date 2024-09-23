@@ -1,6 +1,6 @@
 mod bindings;
 
-use crate::bindings::exports::golem::component::api::*;
+use crate::bindings::exports::golem::component_golem_async::api_golem_async::*;
 use futures_signals::signal::{Mutable, SignalExt};
 use std::sync::LazyLock;
 

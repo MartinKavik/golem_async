@@ -1,39 +1,40 @@
 [package]
-name = "golem_async"
+name = "golem-async-stub"
 version = "0.0.1"
 edition = "2021"
 
+[package.metadata.component]
+package = "golem:component-golem-async"
+
 [package.metadata.component.target]
+world = "wasm-rpc-stub-golem-async"
 path = "wit"
 
 [package.metadata.component.target.dependencies."golem:component"]
-path = "wit/deps/golem_component"
+path = 'wit/deps\golem_component'
 
-[package.metadata.component.target.dependencies."golem:component-golem-async-stub"]
-path = "wit/deps/golem_component-golem-async-stub"
+[package.metadata.component.target.dependencies."golem:component-golem-async"]
+path = "wit/deps/golem_component-golem-async"
 
 [package.metadata.component.target.dependencies."golem:component-runtime-loop"]
-path = "wit/deps/golem_component-runtime-loop"
+path = 'wit/deps\golem_component-runtime-loop'
 
 [package.metadata.component.target.dependencies."golem:component-runtime-loop-stub"]
-path = "wit/deps/golem_component-runtime-loop-stub"
+path = 'wit/deps\golem_component-runtime-loop-stub'
 
 [package.metadata.component.target.dependencies."golem:component-stub"]
-path = "wit/deps/golem_component-stub"
+path = 'wit/deps\golem_component-stub'
 
 [package.metadata.component.target.dependencies."golem:rpc"]
-path = "wit/deps/wasm-rpc"
+path = 'wit/deps\wasm-rpc'
 
 [package.metadata.component.target.dependencies."wasi:io"]
-path = "wit/deps/io"
+path = 'wit/deps\io'
 
-[dependencies]
-futures-executor = "0.3.30"
-futures-signals = "0.3.34"
-futures-task = "0.3.30"
-
-[dependencies.golem-rust]
-version = "1.1.0"
+[dependencies.golem-wasm-rpc]
+version = "1.0.3"
+features = ["stub"]
+default-features = false
 
 [dependencies.wit-bindgen-rt]
 version = "0.26.0"
@@ -47,3 +48,4 @@ required-features = []
 [profile.release]
 opt-level = "s"
 lto = true
+strip = true

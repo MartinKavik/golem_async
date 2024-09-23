@@ -1,13 +1,7 @@
 [workspace]
+members = ["golem_async", "runtime_loop", "golem_async-stub", "runtime_loop-stub"]
 resolver = "2"
- 
-# list the two components here
-members = [
-    "golem_async",
-    "runtime_loop"
-]
- 
-# common release profile for all components
+
 [profile.release]
 opt-level = "s"
 lto = true

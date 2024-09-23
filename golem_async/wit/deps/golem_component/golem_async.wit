@@ -1,14 +1,13 @@
-package golem:component-golem-async;
+package golem:component;
 
 // See https://component-model.bytecodealliance.org/design/wit.html for more details about the WIT syntax
 
-interface api-golem-async {
+interface api {
   add: func(value: u64);
   get: func() -> u64;
   run-all-tasks: func();
 }
 
 world golem-async {
-  import golem:component-runtime-loop-stub/stub-runtime-loop;
-  export api-golem-async;
+  export api;
 }

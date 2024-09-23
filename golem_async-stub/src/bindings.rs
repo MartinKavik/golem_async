@@ -3,329 +3,6 @@
 #[allow(dead_code)]
 pub mod golem {
     #[allow(dead_code)]
-    pub mod component_golem_async_stub {
-        #[allow(dead_code, clippy::all)]
-        pub mod stub_golem_async {
-            #[used]
-            #[doc(hidden)]
-            #[cfg(target_arch = "wasm32")]
-            static __FORCE_SECTION_REF: fn() =
-                super::super::super::__link_custom_section_describing_imports;
-            use super::super::super::_rt;
-            pub type GolemRpcUri = super::super::super::golem::rpc::types::Uri;
-            pub type WasiIoPollable = super::super::super::wasi::io::poll::Pollable;
-
-            #[derive(Debug)]
-            #[repr(transparent)]
-            pub struct FutureGetResult {
-                handle: _rt::Resource<FutureGetResult>,
-            }
-
-            impl FutureGetResult {
-                #[doc(hidden)]
-                pub unsafe fn from_handle(handle: u32) -> Self {
-                    Self {
-                        handle: _rt::Resource::from_handle(handle),
-                    }
-                }
-
-                #[doc(hidden)]
-                pub fn take_handle(&self) -> u32 {
-                    _rt::Resource::take_handle(&self.handle)
-                }
-
-                #[doc(hidden)]
-                pub fn handle(&self) -> u32 {
-                    _rt::Resource::handle(&self.handle)
-                }
-            }
-
-            unsafe impl _rt::WasmResource for FutureGetResult {
-                #[inline]
-                unsafe fn drop(_handle: u32) {
-                    #[cfg(not(target_arch = "wasm32"))]
-                    unreachable!();
-
-                    #[cfg(target_arch = "wasm32")]
-                    {
-                        #[link(
-                            wasm_import_module = "golem:component-golem-async-stub/stub-golem-async"
-                        )]
-                        extern "C" {
-                            #[link_name = "[resource-drop]future-get-result"]
-                            fn drop(_: u32);
-                        }
-
-                        drop(_handle);
-                    }
-                }
-            }
-
-            #[derive(Debug)]
-            #[repr(transparent)]
-            pub struct ApiGolemAsync {
-                handle: _rt::Resource<ApiGolemAsync>,
-            }
-
-            impl ApiGolemAsync {
-                #[doc(hidden)]
-                pub unsafe fn from_handle(handle: u32) -> Self {
-                    Self {
-                        handle: _rt::Resource::from_handle(handle),
-                    }
-                }
-
-                #[doc(hidden)]
-                pub fn take_handle(&self) -> u32 {
-                    _rt::Resource::take_handle(&self.handle)
-                }
-
-                #[doc(hidden)]
-                pub fn handle(&self) -> u32 {
-                    _rt::Resource::handle(&self.handle)
-                }
-            }
-
-            unsafe impl _rt::WasmResource for ApiGolemAsync {
-                #[inline]
-                unsafe fn drop(_handle: u32) {
-                    #[cfg(not(target_arch = "wasm32"))]
-                    unreachable!();
-
-                    #[cfg(target_arch = "wasm32")]
-                    {
-                        #[link(
-                            wasm_import_module = "golem:component-golem-async-stub/stub-golem-async"
-                        )]
-                        extern "C" {
-                            #[link_name = "[resource-drop]api-golem-async"]
-                            fn drop(_: u32);
-                        }
-
-                        drop(_handle);
-                    }
-                }
-            }
-
-            impl FutureGetResult {
-                #[allow(unused_unsafe, clippy::all)]
-                pub fn subscribe(&self) -> WasiIoPollable {
-                    unsafe {
-                        #[cfg(target_arch = "wasm32")]
-                        #[link(
-                            wasm_import_module = "golem:component-golem-async-stub/stub-golem-async"
-                        )]
-                        extern "C" {
-                            #[link_name = "[method]future-get-result.subscribe"]
-                            fn wit_import(_: i32) -> i32;
-                        }
-
-                        #[cfg(not(target_arch = "wasm32"))]
-                        fn wit_import(_: i32) -> i32 {
-                            unreachable!()
-                        }
-                        let ret = wit_import((self).handle() as i32);
-                        super::super::super::wasi::io::poll::Pollable::from_handle(ret as u32)
-                    }
-                }
-            }
-            impl FutureGetResult {
-                #[allow(unused_unsafe, clippy::all)]
-                pub fn get(&self) -> Option<u64> {
-                    unsafe {
-                        #[repr(align(8))]
-                        struct RetArea([::core::mem::MaybeUninit<u8>; 16]);
-                        let mut ret_area = RetArea([::core::mem::MaybeUninit::uninit(); 16]);
-                        let ptr0 = ret_area.0.as_mut_ptr().cast::<u8>();
-                        #[cfg(target_arch = "wasm32")]
-                        #[link(
-                            wasm_import_module = "golem:component-golem-async-stub/stub-golem-async"
-                        )]
-                        extern "C" {
-                            #[link_name = "[method]future-get-result.get"]
-                            fn wit_import(_: i32, _: *mut u8);
-                        }
-
-                        #[cfg(not(target_arch = "wasm32"))]
-                        fn wit_import(_: i32, _: *mut u8) {
-                            unreachable!()
-                        }
-                        wit_import((self).handle() as i32, ptr0);
-                        let l1 = i32::from(*ptr0.add(0).cast::<u8>());
-                        match l1 {
-                            0 => None,
-                            1 => {
-                                let e = {
-                                    let l2 = *ptr0.add(8).cast::<i64>();
-
-                                    l2 as u64
-                                };
-                                Some(e)
-                            }
-                            _ => _rt::invalid_enum_discriminant(),
-                        }
-                    }
-                }
-            }
-            impl ApiGolemAsync {
-                #[allow(unused_unsafe, clippy::all)]
-                pub fn new(location: &GolemRpcUri) -> Self {
-                    unsafe {
-                        let super::super::super::golem::rpc::types::Uri { value: value0 } =
-                            location;
-                        let vec1 = value0;
-                        let ptr1 = vec1.as_ptr().cast::<u8>();
-                        let len1 = vec1.len();
-
-                        #[cfg(target_arch = "wasm32")]
-                        #[link(
-                            wasm_import_module = "golem:component-golem-async-stub/stub-golem-async"
-                        )]
-                        extern "C" {
-                            #[link_name = "[constructor]api-golem-async"]
-                            fn wit_import(_: *mut u8, _: usize) -> i32;
-                        }
-
-                        #[cfg(not(target_arch = "wasm32"))]
-                        fn wit_import(_: *mut u8, _: usize) -> i32 {
-                            unreachable!()
-                        }
-                        let ret = wit_import(ptr1.cast_mut(), len1);
-                        ApiGolemAsync::from_handle(ret as u32)
-                    }
-                }
-            }
-            impl ApiGolemAsync {
-                #[allow(unused_unsafe, clippy::all)]
-                pub fn blocking_add(&self, value: u64) {
-                    unsafe {
-                        #[cfg(target_arch = "wasm32")]
-                        #[link(
-                            wasm_import_module = "golem:component-golem-async-stub/stub-golem-async"
-                        )]
-                        extern "C" {
-                            #[link_name = "[method]api-golem-async.blocking-add"]
-                            fn wit_import(_: i32, _: i64);
-                        }
-
-                        #[cfg(not(target_arch = "wasm32"))]
-                        fn wit_import(_: i32, _: i64) {
-                            unreachable!()
-                        }
-                        wit_import((self).handle() as i32, _rt::as_i64(&value));
-                    }
-                }
-            }
-            impl ApiGolemAsync {
-                #[allow(unused_unsafe, clippy::all)]
-                pub fn add(&self, value: u64) {
-                    unsafe {
-                        #[cfg(target_arch = "wasm32")]
-                        #[link(
-                            wasm_import_module = "golem:component-golem-async-stub/stub-golem-async"
-                        )]
-                        extern "C" {
-                            #[link_name = "[method]api-golem-async.add"]
-                            fn wit_import(_: i32, _: i64);
-                        }
-
-                        #[cfg(not(target_arch = "wasm32"))]
-                        fn wit_import(_: i32, _: i64) {
-                            unreachable!()
-                        }
-                        wit_import((self).handle() as i32, _rt::as_i64(&value));
-                    }
-                }
-            }
-            impl ApiGolemAsync {
-                #[allow(unused_unsafe, clippy::all)]
-                pub fn blocking_get(&self) -> u64 {
-                    unsafe {
-                        #[cfg(target_arch = "wasm32")]
-                        #[link(
-                            wasm_import_module = "golem:component-golem-async-stub/stub-golem-async"
-                        )]
-                        extern "C" {
-                            #[link_name = "[method]api-golem-async.blocking-get"]
-                            fn wit_import(_: i32) -> i64;
-                        }
-
-                        #[cfg(not(target_arch = "wasm32"))]
-                        fn wit_import(_: i32) -> i64 {
-                            unreachable!()
-                        }
-                        let ret = wit_import((self).handle() as i32);
-                        ret as u64
-                    }
-                }
-            }
-            impl ApiGolemAsync {
-                #[allow(unused_unsafe, clippy::all)]
-                pub fn get(&self) -> FutureGetResult {
-                    unsafe {
-                        #[cfg(target_arch = "wasm32")]
-                        #[link(
-                            wasm_import_module = "golem:component-golem-async-stub/stub-golem-async"
-                        )]
-                        extern "C" {
-                            #[link_name = "[method]api-golem-async.get"]
-                            fn wit_import(_: i32) -> i32;
-                        }
-
-                        #[cfg(not(target_arch = "wasm32"))]
-                        fn wit_import(_: i32) -> i32 {
-                            unreachable!()
-                        }
-                        let ret = wit_import((self).handle() as i32);
-                        FutureGetResult::from_handle(ret as u32)
-                    }
-                }
-            }
-            impl ApiGolemAsync {
-                #[allow(unused_unsafe, clippy::all)]
-                pub fn blocking_run_all_tasks(&self) {
-                    unsafe {
-                        #[cfg(target_arch = "wasm32")]
-                        #[link(
-                            wasm_import_module = "golem:component-golem-async-stub/stub-golem-async"
-                        )]
-                        extern "C" {
-                            #[link_name = "[method]api-golem-async.blocking-run-all-tasks"]
-                            fn wit_import(_: i32);
-                        }
-
-                        #[cfg(not(target_arch = "wasm32"))]
-                        fn wit_import(_: i32) {
-                            unreachable!()
-                        }
-                        wit_import((self).handle() as i32);
-                    }
-                }
-            }
-            impl ApiGolemAsync {
-                #[allow(unused_unsafe, clippy::all)]
-                pub fn run_all_tasks(&self) {
-                    unsafe {
-                        #[cfg(target_arch = "wasm32")]
-                        #[link(
-                            wasm_import_module = "golem:component-golem-async-stub/stub-golem-async"
-                        )]
-                        extern "C" {
-                            #[link_name = "[method]api-golem-async.run-all-tasks"]
-                            fn wit_import(_: i32);
-                        }
-
-                        #[cfg(not(target_arch = "wasm32"))]
-                        fn wit_import(_: i32) {
-                            unreachable!()
-                        }
-                        wit_import((self).handle() as i32);
-                    }
-                }
-            }
-        }
-    }
-    #[allow(dead_code)]
     pub mod rpc {
         #[allow(dead_code, clippy::all)]
         pub mod types {
@@ -2691,38 +2368,613 @@ pub mod exports {
     #[allow(dead_code)]
     pub mod golem {
         #[allow(dead_code)]
-        pub mod component_runtime_loop {
+        pub mod component_golem_async_stub {
             #[allow(dead_code, clippy::all)]
-            pub mod api_runtime_loop {
+            pub mod stub_golem_async {
                 #[used]
                 #[doc(hidden)]
                 #[cfg(target_arch = "wasm32")]
                 static __FORCE_SECTION_REF: fn() =
                     super::super::super::super::__link_custom_section_describing_imports;
                 use super::super::super::super::_rt;
+                pub type GolemRpcUri = super::super::super::super::golem::rpc::types::Uri;
+                pub type WasiIoPollable = super::super::super::super::wasi::io::poll::Pollable;
+
+                #[derive(Debug)]
+                #[repr(transparent)]
+                pub struct FutureGetResult {
+                    handle: _rt::Resource<FutureGetResult>,
+                }
+
+                type _FutureGetResultRep<T> = Option<T>;
+
+                impl FutureGetResult {
+                    /// Creates a new resource from the specified representation.
+                    ///
+                    /// This function will create a new resource handle by moving `val` onto
+                    /// the heap and then passing that heap pointer to the component model to
+                    /// create a handle. The owned handle is then returned as `FutureGetResult`.
+                    pub fn new<T: GuestFutureGetResult>(val: T) -> Self {
+                        Self::type_guard::<T>();
+                        let val: _FutureGetResultRep<T> = Some(val);
+                        let ptr: *mut _FutureGetResultRep<T> =
+                            _rt::Box::into_raw(_rt::Box::new(val));
+                        unsafe { Self::from_handle(T::_resource_new(ptr.cast())) }
+                    }
+
+                    /// Gets access to the underlying `T` which represents this resource.
+                    pub fn get<T: GuestFutureGetResult>(&self) -> &T {
+                        let ptr = unsafe { &*self.as_ptr::<T>() };
+                        ptr.as_ref().unwrap()
+                    }
+
+                    /// Gets mutable access to the underlying `T` which represents this
+                    /// resource.
+                    pub fn get_mut<T: GuestFutureGetResult>(&mut self) -> &mut T {
+                        let ptr = unsafe { &mut *self.as_ptr::<T>() };
+                        ptr.as_mut().unwrap()
+                    }
+
+                    /// Consumes this resource and returns the underlying `T`.
+                    pub fn into_inner<T: GuestFutureGetResult>(self) -> T {
+                        let ptr = unsafe { &mut *self.as_ptr::<T>() };
+                        ptr.take().unwrap()
+                    }
+
+                    #[doc(hidden)]
+                    pub unsafe fn from_handle(handle: u32) -> Self {
+                        Self {
+                            handle: _rt::Resource::from_handle(handle),
+                        }
+                    }
+
+                    #[doc(hidden)]
+                    pub fn take_handle(&self) -> u32 {
+                        _rt::Resource::take_handle(&self.handle)
+                    }
+
+                    #[doc(hidden)]
+                    pub fn handle(&self) -> u32 {
+                        _rt::Resource::handle(&self.handle)
+                    }
+
+                    // It's theoretically possible to implement the `GuestFutureGetResult` trait twice
+                    // so guard against using it with two different types here.
+                    #[doc(hidden)]
+                    fn type_guard<T: 'static>() {
+                        use core::any::TypeId;
+                        static mut LAST_TYPE: Option<TypeId> = None;
+                        unsafe {
+                            assert!(!cfg!(target_feature = "threads"));
+                            let id = TypeId::of::<T>();
+                            match LAST_TYPE {
+                                Some(ty) => assert!(
+                                    ty == id,
+                                    "cannot use two types with this resource type"
+                                ),
+                                None => LAST_TYPE = Some(id),
+                            }
+                        }
+                    }
+
+                    #[doc(hidden)]
+                    pub unsafe fn dtor<T: 'static>(handle: *mut u8) {
+                        Self::type_guard::<T>();
+                        let _ = _rt::Box::from_raw(handle as *mut _FutureGetResultRep<T>);
+                    }
+
+                    fn as_ptr<T: GuestFutureGetResult>(&self) -> *mut _FutureGetResultRep<T> {
+                        FutureGetResult::type_guard::<T>();
+                        T::_resource_rep(self.handle()).cast()
+                    }
+                }
+
+                /// A borrowed version of [`FutureGetResult`] which represents a borrowed value
+                /// with the lifetime `'a`.
+                #[derive(Debug)]
+                #[repr(transparent)]
+                pub struct FutureGetResultBorrow<'a> {
+                    rep: *mut u8,
+                    _marker: core::marker::PhantomData<&'a FutureGetResult>,
+                }
+
+                impl<'a> FutureGetResultBorrow<'a> {
+                    #[doc(hidden)]
+                    pub unsafe fn lift(rep: usize) -> Self {
+                        Self {
+                            rep: rep as *mut u8,
+                            _marker: core::marker::PhantomData,
+                        }
+                    }
+
+                    /// Gets access to the underlying `T` in this resource.
+                    pub fn get<T: GuestFutureGetResult>(&self) -> &T {
+                        let ptr = unsafe { &mut *self.as_ptr::<T>() };
+                        ptr.as_ref().unwrap()
+                    }
+
+                    // NB: mutable access is not allowed due to the component model allowing
+                    // multiple borrows of the same resource.
+
+                    fn as_ptr<T: 'static>(&self) -> *mut _FutureGetResultRep<T> {
+                        FutureGetResult::type_guard::<T>();
+                        self.rep.cast()
+                    }
+                }
+
+                unsafe impl _rt::WasmResource for FutureGetResult {
+                    #[inline]
+                    unsafe fn drop(_handle: u32) {
+                        #[cfg(not(target_arch = "wasm32"))]
+                        unreachable!();
+
+                        #[cfg(target_arch = "wasm32")]
+                        {
+                            #[link(
+                                wasm_import_module = "[export]golem:component-golem-async-stub/stub-golem-async"
+                            )]
+                            extern "C" {
+                                #[link_name = "[resource-drop]future-get-result"]
+                                fn drop(_: u32);
+                            }
+
+                            drop(_handle);
+                        }
+                    }
+                }
+
+                #[derive(Debug)]
+                #[repr(transparent)]
+                pub struct ApiGolemAsync {
+                    handle: _rt::Resource<ApiGolemAsync>,
+                }
+
+                type _ApiGolemAsyncRep<T> = Option<T>;
+
+                impl ApiGolemAsync {
+                    /// Creates a new resource from the specified representation.
+                    ///
+                    /// This function will create a new resource handle by moving `val` onto
+                    /// the heap and then passing that heap pointer to the component model to
+                    /// create a handle. The owned handle is then returned as `ApiGolemAsync`.
+                    pub fn new<T: GuestApiGolemAsync>(val: T) -> Self {
+                        Self::type_guard::<T>();
+                        let val: _ApiGolemAsyncRep<T> = Some(val);
+                        let ptr: *mut _ApiGolemAsyncRep<T> = _rt::Box::into_raw(_rt::Box::new(val));
+                        unsafe { Self::from_handle(T::_resource_new(ptr.cast())) }
+                    }
+
+                    /// Gets access to the underlying `T` which represents this resource.
+                    pub fn get<T: GuestApiGolemAsync>(&self) -> &T {
+                        let ptr = unsafe { &*self.as_ptr::<T>() };
+                        ptr.as_ref().unwrap()
+                    }
+
+                    /// Gets mutable access to the underlying `T` which represents this
+                    /// resource.
+                    pub fn get_mut<T: GuestApiGolemAsync>(&mut self) -> &mut T {
+                        let ptr = unsafe { &mut *self.as_ptr::<T>() };
+                        ptr.as_mut().unwrap()
+                    }
+
+                    /// Consumes this resource and returns the underlying `T`.
+                    pub fn into_inner<T: GuestApiGolemAsync>(self) -> T {
+                        let ptr = unsafe { &mut *self.as_ptr::<T>() };
+                        ptr.take().unwrap()
+                    }
+
+                    #[doc(hidden)]
+                    pub unsafe fn from_handle(handle: u32) -> Self {
+                        Self {
+                            handle: _rt::Resource::from_handle(handle),
+                        }
+                    }
+
+                    #[doc(hidden)]
+                    pub fn take_handle(&self) -> u32 {
+                        _rt::Resource::take_handle(&self.handle)
+                    }
+
+                    #[doc(hidden)]
+                    pub fn handle(&self) -> u32 {
+                        _rt::Resource::handle(&self.handle)
+                    }
+
+                    // It's theoretically possible to implement the `GuestApiGolemAsync` trait twice
+                    // so guard against using it with two different types here.
+                    #[doc(hidden)]
+                    fn type_guard<T: 'static>() {
+                        use core::any::TypeId;
+                        static mut LAST_TYPE: Option<TypeId> = None;
+                        unsafe {
+                            assert!(!cfg!(target_feature = "threads"));
+                            let id = TypeId::of::<T>();
+                            match LAST_TYPE {
+                                Some(ty) => assert!(
+                                    ty == id,
+                                    "cannot use two types with this resource type"
+                                ),
+                                None => LAST_TYPE = Some(id),
+                            }
+                        }
+                    }
+
+                    #[doc(hidden)]
+                    pub unsafe fn dtor<T: 'static>(handle: *mut u8) {
+                        Self::type_guard::<T>();
+                        let _ = _rt::Box::from_raw(handle as *mut _ApiGolemAsyncRep<T>);
+                    }
+
+                    fn as_ptr<T: GuestApiGolemAsync>(&self) -> *mut _ApiGolemAsyncRep<T> {
+                        ApiGolemAsync::type_guard::<T>();
+                        T::_resource_rep(self.handle()).cast()
+                    }
+                }
+
+                /// A borrowed version of [`ApiGolemAsync`] which represents a borrowed value
+                /// with the lifetime `'a`.
+                #[derive(Debug)]
+                #[repr(transparent)]
+                pub struct ApiGolemAsyncBorrow<'a> {
+                    rep: *mut u8,
+                    _marker: core::marker::PhantomData<&'a ApiGolemAsync>,
+                }
+
+                impl<'a> ApiGolemAsyncBorrow<'a> {
+                    #[doc(hidden)]
+                    pub unsafe fn lift(rep: usize) -> Self {
+                        Self {
+                            rep: rep as *mut u8,
+                            _marker: core::marker::PhantomData,
+                        }
+                    }
+
+                    /// Gets access to the underlying `T` in this resource.
+                    pub fn get<T: GuestApiGolemAsync>(&self) -> &T {
+                        let ptr = unsafe { &mut *self.as_ptr::<T>() };
+                        ptr.as_ref().unwrap()
+                    }
+
+                    // NB: mutable access is not allowed due to the component model allowing
+                    // multiple borrows of the same resource.
+
+                    fn as_ptr<T: 'static>(&self) -> *mut _ApiGolemAsyncRep<T> {
+                        ApiGolemAsync::type_guard::<T>();
+                        self.rep.cast()
+                    }
+                }
+
+                unsafe impl _rt::WasmResource for ApiGolemAsync {
+                    #[inline]
+                    unsafe fn drop(_handle: u32) {
+                        #[cfg(not(target_arch = "wasm32"))]
+                        unreachable!();
+
+                        #[cfg(target_arch = "wasm32")]
+                        {
+                            #[link(
+                                wasm_import_module = "[export]golem:component-golem-async-stub/stub-golem-async"
+                            )]
+                            extern "C" {
+                                #[link_name = "[resource-drop]api-golem-async"]
+                                fn drop(_: u32);
+                            }
+
+                            drop(_handle);
+                        }
+                    }
+                }
+
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
-                pub unsafe fn _export_start_loop_cabi<T: Guest>() {
+                pub unsafe fn _export_method_future_get_result_subscribe_cabi<
+                    T: GuestFutureGetResult,
+                >(
+                    arg0: *mut u8,
+                ) -> i32 {
                     #[cfg(target_arch = "wasm32")]
                     _rt::run_ctors_once();
-                    T::start_loop();
+                    let result0 =
+                        T::subscribe(FutureGetResultBorrow::lift(arg0 as u32 as usize).get());
+                    (result0).take_handle() as i32
+                }
+                #[doc(hidden)]
+                #[allow(non_snake_case)]
+                pub unsafe fn _export_method_future_get_result_get_cabi<T: GuestFutureGetResult>(
+                    arg0: *mut u8,
+                ) -> *mut u8 {
+                    #[cfg(target_arch = "wasm32")]
+                    _rt::run_ctors_once();
+                    let result0 = T::get(FutureGetResultBorrow::lift(arg0 as u32 as usize).get());
+                    let ptr1 = _RET_AREA.0.as_mut_ptr().cast::<u8>();
+                    match result0 {
+                        Some(e) => {
+                            *ptr1.add(0).cast::<u8>() = (1i32) as u8;
+                            *ptr1.add(8).cast::<i64>() = _rt::as_i64(e);
+                        }
+                        None => {
+                            *ptr1.add(0).cast::<u8>() = (0i32) as u8;
+                        }
+                    };
+                    ptr1
+                }
+                #[doc(hidden)]
+                #[allow(non_snake_case)]
+                pub unsafe fn _export_constructor_api_golem_async_cabi<T: GuestApiGolemAsync>(
+                    arg0: *mut u8,
+                    arg1: usize,
+                ) -> i32 {
+                    #[cfg(target_arch = "wasm32")]
+                    _rt::run_ctors_once();
+                    let len0 = arg1;
+                    let bytes0 = _rt::Vec::from_raw_parts(arg0.cast(), len0, len0);
+                    let result1 = ApiGolemAsync::new(T::new(
+                        super::super::super::super::golem::rpc::types::Uri {
+                            value: _rt::string_lift(bytes0),
+                        },
+                    ));
+                    (result1).take_handle() as i32
+                }
+                #[doc(hidden)]
+                #[allow(non_snake_case)]
+                pub unsafe fn _export_method_api_golem_async_blocking_add_cabi<
+                    T: GuestApiGolemAsync,
+                >(
+                    arg0: *mut u8,
+                    arg1: i64,
+                ) {
+                    #[cfg(target_arch = "wasm32")]
+                    _rt::run_ctors_once();
+                    T::blocking_add(
+                        ApiGolemAsyncBorrow::lift(arg0 as u32 as usize).get(),
+                        arg1 as u64,
+                    );
+                }
+                #[doc(hidden)]
+                #[allow(non_snake_case)]
+                pub unsafe fn _export_method_api_golem_async_add_cabi<T: GuestApiGolemAsync>(
+                    arg0: *mut u8,
+                    arg1: i64,
+                ) {
+                    #[cfg(target_arch = "wasm32")]
+                    _rt::run_ctors_once();
+                    T::add(
+                        ApiGolemAsyncBorrow::lift(arg0 as u32 as usize).get(),
+                        arg1 as u64,
+                    );
+                }
+                #[doc(hidden)]
+                #[allow(non_snake_case)]
+                pub unsafe fn _export_method_api_golem_async_blocking_get_cabi<
+                    T: GuestApiGolemAsync,
+                >(
+                    arg0: *mut u8,
+                ) -> i64 {
+                    #[cfg(target_arch = "wasm32")]
+                    _rt::run_ctors_once();
+                    let result0 =
+                        T::blocking_get(ApiGolemAsyncBorrow::lift(arg0 as u32 as usize).get());
+                    _rt::as_i64(result0)
+                }
+                #[doc(hidden)]
+                #[allow(non_snake_case)]
+                pub unsafe fn _export_method_api_golem_async_get_cabi<T: GuestApiGolemAsync>(
+                    arg0: *mut u8,
+                ) -> i32 {
+                    #[cfg(target_arch = "wasm32")]
+                    _rt::run_ctors_once();
+                    let result0 = T::get(ApiGolemAsyncBorrow::lift(arg0 as u32 as usize).get());
+                    (result0).take_handle() as i32
+                }
+                #[doc(hidden)]
+                #[allow(non_snake_case)]
+                pub unsafe fn _export_method_api_golem_async_blocking_run_all_tasks_cabi<
+                    T: GuestApiGolemAsync,
+                >(
+                    arg0: *mut u8,
+                ) {
+                    #[cfg(target_arch = "wasm32")]
+                    _rt::run_ctors_once();
+                    T::blocking_run_all_tasks(
+                        ApiGolemAsyncBorrow::lift(arg0 as u32 as usize).get(),
+                    );
+                }
+                #[doc(hidden)]
+                #[allow(non_snake_case)]
+                pub unsafe fn _export_method_api_golem_async_run_all_tasks_cabi<
+                    T: GuestApiGolemAsync,
+                >(
+                    arg0: *mut u8,
+                ) {
+                    #[cfg(target_arch = "wasm32")]
+                    _rt::run_ctors_once();
+                    T::run_all_tasks(ApiGolemAsyncBorrow::lift(arg0 as u32 as usize).get());
                 }
                 pub trait Guest {
-                    fn start_loop();
+                    type FutureGetResult: GuestFutureGetResult;
+                    type ApiGolemAsync: GuestApiGolemAsync;
+                }
+                pub trait GuestFutureGetResult: 'static {
+                    #[doc(hidden)]
+                    unsafe fn _resource_new(val: *mut u8) -> u32
+                    where
+                        Self: Sized,
+                    {
+                        #[cfg(not(target_arch = "wasm32"))]
+                        {
+                            let _ = val;
+                            unreachable!();
+                        }
+
+                        #[cfg(target_arch = "wasm32")]
+                        {
+                            #[link(
+                                wasm_import_module = "[export]golem:component-golem-async-stub/stub-golem-async"
+                            )]
+                            extern "C" {
+                                #[link_name = "[resource-new]future-get-result"]
+                                fn new(_: *mut u8) -> u32;
+                            }
+                            new(val)
+                        }
+                    }
+
+                    #[doc(hidden)]
+                    fn _resource_rep(handle: u32) -> *mut u8
+                    where
+                        Self: Sized,
+                    {
+                        #[cfg(not(target_arch = "wasm32"))]
+                        {
+                            let _ = handle;
+                            unreachable!();
+                        }
+
+                        #[cfg(target_arch = "wasm32")]
+                        {
+                            #[link(
+                                wasm_import_module = "[export]golem:component-golem-async-stub/stub-golem-async"
+                            )]
+                            extern "C" {
+                                #[link_name = "[resource-rep]future-get-result"]
+                                fn rep(_: u32) -> *mut u8;
+                            }
+                            unsafe { rep(handle) }
+                        }
+                    }
+
+                    fn subscribe(&self) -> WasiIoPollable;
+                    fn get(&self) -> Option<u64>;
+                }
+                pub trait GuestApiGolemAsync: 'static {
+                    #[doc(hidden)]
+                    unsafe fn _resource_new(val: *mut u8) -> u32
+                    where
+                        Self: Sized,
+                    {
+                        #[cfg(not(target_arch = "wasm32"))]
+                        {
+                            let _ = val;
+                            unreachable!();
+                        }
+
+                        #[cfg(target_arch = "wasm32")]
+                        {
+                            #[link(
+                                wasm_import_module = "[export]golem:component-golem-async-stub/stub-golem-async"
+                            )]
+                            extern "C" {
+                                #[link_name = "[resource-new]api-golem-async"]
+                                fn new(_: *mut u8) -> u32;
+                            }
+                            new(val)
+                        }
+                    }
+
+                    #[doc(hidden)]
+                    fn _resource_rep(handle: u32) -> *mut u8
+                    where
+                        Self: Sized,
+                    {
+                        #[cfg(not(target_arch = "wasm32"))]
+                        {
+                            let _ = handle;
+                            unreachable!();
+                        }
+
+                        #[cfg(target_arch = "wasm32")]
+                        {
+                            #[link(
+                                wasm_import_module = "[export]golem:component-golem-async-stub/stub-golem-async"
+                            )]
+                            extern "C" {
+                                #[link_name = "[resource-rep]api-golem-async"]
+                                fn rep(_: u32) -> *mut u8;
+                            }
+                            unsafe { rep(handle) }
+                        }
+                    }
+
+                    fn new(location: GolemRpcUri) -> Self;
+                    fn blocking_add(&self, value: u64);
+                    fn add(&self, value: u64);
+                    fn blocking_get(&self) -> u64;
+                    fn get(&self) -> FutureGetResult;
+                    fn blocking_run_all_tasks(&self);
+                    fn run_all_tasks(&self);
                 }
                 #[doc(hidden)]
 
-                macro_rules! __export_golem_component_runtime_loop_api_runtime_loop_cabi{
-                                      ($ty:ident with_types_in $($path_to_types:tt)*) => (const _: () = {
+                macro_rules! __export_golem_component_golem_async_stub_stub_golem_async_cabi{
+                      ($ty:ident with_types_in $($path_to_types:tt)*) => (const _: () = {
 
-                                        #[export_name = "golem:component-runtime-loop/api-runtime-loop#start-loop"]
-                                        unsafe extern "C" fn export_start_loop() {
-                                          $($path_to_types)*::_export_start_loop_cabi::<$ty>()
-                                        }
-                                      };);
-                                    }
+                        #[export_name = "golem:component-golem-async-stub/stub-golem-async#[method]future-get-result.subscribe"]
+                        unsafe extern "C" fn export_method_future_get_result_subscribe(arg0: *mut u8,) -> i32 {
+                          $($path_to_types)*::_export_method_future_get_result_subscribe_cabi::<<$ty as $($path_to_types)*::Guest>::FutureGetResult>(arg0)
+                        }
+                        #[export_name = "golem:component-golem-async-stub/stub-golem-async#[method]future-get-result.get"]
+                        unsafe extern "C" fn export_method_future_get_result_get(arg0: *mut u8,) -> *mut u8 {
+                          $($path_to_types)*::_export_method_future_get_result_get_cabi::<<$ty as $($path_to_types)*::Guest>::FutureGetResult>(arg0)
+                        }
+                        #[export_name = "golem:component-golem-async-stub/stub-golem-async#[constructor]api-golem-async"]
+                        unsafe extern "C" fn export_constructor_api_golem_async(arg0: *mut u8,arg1: usize,) -> i32 {
+                          $($path_to_types)*::_export_constructor_api_golem_async_cabi::<<$ty as $($path_to_types)*::Guest>::ApiGolemAsync>(arg0, arg1)
+                        }
+                        #[export_name = "golem:component-golem-async-stub/stub-golem-async#[method]api-golem-async.blocking-add"]
+                        unsafe extern "C" fn export_method_api_golem_async_blocking_add(arg0: *mut u8,arg1: i64,) {
+                          $($path_to_types)*::_export_method_api_golem_async_blocking_add_cabi::<<$ty as $($path_to_types)*::Guest>::ApiGolemAsync>(arg0, arg1)
+                        }
+                        #[export_name = "golem:component-golem-async-stub/stub-golem-async#[method]api-golem-async.add"]
+                        unsafe extern "C" fn export_method_api_golem_async_add(arg0: *mut u8,arg1: i64,) {
+                          $($path_to_types)*::_export_method_api_golem_async_add_cabi::<<$ty as $($path_to_types)*::Guest>::ApiGolemAsync>(arg0, arg1)
+                        }
+                        #[export_name = "golem:component-golem-async-stub/stub-golem-async#[method]api-golem-async.blocking-get"]
+                        unsafe extern "C" fn export_method_api_golem_async_blocking_get(arg0: *mut u8,) -> i64 {
+                          $($path_to_types)*::_export_method_api_golem_async_blocking_get_cabi::<<$ty as $($path_to_types)*::Guest>::ApiGolemAsync>(arg0)
+                        }
+                        #[export_name = "golem:component-golem-async-stub/stub-golem-async#[method]api-golem-async.get"]
+                        unsafe extern "C" fn export_method_api_golem_async_get(arg0: *mut u8,) -> i32 {
+                          $($path_to_types)*::_export_method_api_golem_async_get_cabi::<<$ty as $($path_to_types)*::Guest>::ApiGolemAsync>(arg0)
+                        }
+                        #[export_name = "golem:component-golem-async-stub/stub-golem-async#[method]api-golem-async.blocking-run-all-tasks"]
+                        unsafe extern "C" fn export_method_api_golem_async_blocking_run_all_tasks(arg0: *mut u8,) {
+                          $($path_to_types)*::_export_method_api_golem_async_blocking_run_all_tasks_cabi::<<$ty as $($path_to_types)*::Guest>::ApiGolemAsync>(arg0)
+                        }
+                        #[export_name = "golem:component-golem-async-stub/stub-golem-async#[method]api-golem-async.run-all-tasks"]
+                        unsafe extern "C" fn export_method_api_golem_async_run_all_tasks(arg0: *mut u8,) {
+                          $($path_to_types)*::_export_method_api_golem_async_run_all_tasks_cabi::<<$ty as $($path_to_types)*::Guest>::ApiGolemAsync>(arg0)
+                        }
+
+                        const _: () = {
+                          #[doc(hidden)]
+                          #[export_name = "golem:component-golem-async-stub/stub-golem-async#[dtor]future-get-result"]
+                          #[allow(non_snake_case)]
+                          unsafe extern "C" fn dtor(rep: *mut u8) {
+                            $($path_to_types)*::FutureGetResult::dtor::<
+                            <$ty as $($path_to_types)*::Guest>::FutureGetResult
+                            >(rep)
+                          }
+                        };
+
+
+                        const _: () = {
+                          #[doc(hidden)]
+                          #[export_name = "golem:component-golem-async-stub/stub-golem-async#[dtor]api-golem-async"]
+                          #[allow(non_snake_case)]
+                          unsafe extern "C" fn dtor(rep: *mut u8) {
+                            $($path_to_types)*::ApiGolemAsync::dtor::<
+                            <$ty as $($path_to_types)*::Guest>::ApiGolemAsync
+                            >(rep)
+                          }
+                        };
+
+                      };);
+                    }
                 #[doc(hidden)]
-                pub(crate) use __export_golem_component_runtime_loop_api_runtime_loop_cabi;
+                pub(crate) use __export_golem_component_golem_async_stub_stub_golem_async_cabi;
+                #[repr(align(8))]
+                struct _RetArea([::core::mem::MaybeUninit<u8>; 16]);
+                static mut _RET_AREA: _RetArea = _RetArea([::core::mem::MaybeUninit::uninit(); 16]);
             }
         }
     }
@@ -3005,6 +3257,7 @@ mod _rt {
             String::from_utf8_unchecked(bytes)
         }
     }
+    pub use alloc_crate::boxed::Box;
 
     #[cfg(target_arch = "wasm32")]
     pub fn run_ctors_once() {
@@ -3032,21 +3285,21 @@ mod _rt {
 #[allow(unused_macros)]
 #[doc(hidden)]
 
-macro_rules! __export_runtime_loop_impl {
-                              ($ty:ident) => (self::export!($ty with_types_in self););
-                              ($ty:ident with_types_in $($path_to_types_root:tt)*) => (
-                              $($path_to_types_root)*::exports::golem::component_runtime_loop::api_runtime_loop::__export_golem_component_runtime_loop_api_runtime_loop_cabi!($ty with_types_in $($path_to_types_root)*::exports::golem::component_runtime_loop::api_runtime_loop);
-                              )
-                            }
+macro_rules! __export_wasm_rpc_stub_golem_async_impl {
+              ($ty:ident) => (self::export!($ty with_types_in self););
+              ($ty:ident with_types_in $($path_to_types_root:tt)*) => (
+              $($path_to_types_root)*::exports::golem::component_golem_async_stub::stub_golem_async::__export_golem_component_golem_async_stub_stub_golem_async_cabi!($ty with_types_in $($path_to_types_root)*::exports::golem::component_golem_async_stub::stub_golem_async);
+              )
+            }
 #[doc(inline)]
-pub(crate) use __export_runtime_loop_impl as export;
+pub(crate) use __export_wasm_rpc_stub_golem_async_impl as export;
 
 #[cfg(target_arch = "wasm32")]
-#[link_section = "component-type:wit-bindgen:0.25.0:runtime-loop:encoded world"]
+#[link_section = "component-type:wit-bindgen:0.25.0:wasm-rpc-stub-golem-async:encoded world"]
 #[doc(hidden)]
-pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 2012] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xd9\x0e\x01A\x02\x01\
-A\x0a\x01B\x0a\x04\0\x08pollable\x03\x01\x01h\0\x01@\x01\x04self\x01\0\x7f\x04\0\
+pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 1969] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xa1\x0e\x01A\x02\x01\
+A\x08\x01B\x0a\x04\0\x08pollable\x03\x01\x01h\0\x01@\x01\x04self\x01\0\x7f\x04\0\
 \x16[method]pollable.ready\x01\x02\x01@\x01\x04self\x01\x01\0\x04\0\x16[method]p\
 ollable.block\x01\x03\x01p\x01\x01py\x01@\x01\x02in\x04\0\x05\x04\0\x04poll\x01\x06\
 \x03\x01\x12wasi:io/poll@0.2.0\x05\0\x02\x03\0\0\x08pollable\x01B*\x02\x03\x02\x01\
@@ -3081,11 +3334,10 @@ constructor]api-golem-async\x01\x0c\x01h\x05\x01@\x02\x04self\x0d\x05valuew\x01\
 sync.add\x01\x0e\x01@\x01\x04self\x0d\0w\x04\0$[method]api-golem-async.blocking-\
 get\x01\x0f\x01i\x04\x01@\x01\x04self\x0d\0\x10\x04\0\x1b[method]api-golem-async\
 .get\x01\x11\x01@\x01\x04self\x0d\x01\0\x04\0.[method]api-golem-async.blocking-r\
-un-all-tasks\x01\x12\x04\0%[method]api-golem-async.run-all-tasks\x01\x12\x03\x01\
-1golem:component-golem-async-stub/stub-golem-async\x05\x04\x01B\x02\x01@\0\x01\0\
-\x04\0\x0astart-loop\x01\0\x04\x01-golem:component-runtime-loop/api-runtime-loop\
-\x05\x05\x04\x01)golem:component-runtime-loop/runtime-loop\x04\0\x0b\x12\x01\0\x0c\
-runtime-loop\x03\0\0\0G\x09producers\x01\x0cprocessed-by\x02\x0dwit-component\x07\
+un-all-tasks\x01\x12\x04\0%[method]api-golem-async.run-all-tasks\x01\x12\x04\x01\
+1golem:component-golem-async-stub/stub-golem-async\x05\x04\x04\x01:golem:compone\
+nt-golem-async-stub/wasm-rpc-stub-golem-async\x04\0\x0b\x1f\x01\0\x19wasm-rpc-st\
+ub-golem-async\x03\0\0\0G\x09producers\x01\x0cprocessed-by\x02\x0dwit-component\x07\
 0.208.1\x10wit-bindgen-rust\x060.25.0";
 
 #[inline(never)]

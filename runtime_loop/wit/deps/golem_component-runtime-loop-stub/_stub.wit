@@ -1,0 +1,17 @@
+package golem:component-runtime-loop-stub;
+
+interface stub-runtime-loop {
+  use golem:rpc/types@0.1.0.{uri as golem-rpc-uri};
+  use wasi:io/poll@0.2.0.{pollable as wasi-io-pollable};
+
+  resource api-runtime-loop {
+    constructor(location: golem-rpc-uri);
+    blocking-start-loop: func();
+    start-loop: func();
+  }
+
+}
+
+world wasm-rpc-stub-runtime-loop {
+  export stub-runtime-loop;
+}
