@@ -42,17 +42,19 @@ mod task {
     use futures_task::LocalSpawn;
     use std::cell::RefCell;
     use std::future::Future;
+    use std::env;
 
     use crate::bindings::golem::component_runtime_loop_stub::stub_runtime_loop::*;
 
     thread_local! {
         static TASK_POOL: RefCell<LocalPool> = Default::default();
         static TASK_SPAWNER: LocalSpawner = TASK_POOL.with_borrow(|pool| {
+            let component_id = env::var("RUNTIME_LOOP_COMPONENT_ID").expect("RUNTIME_LOOP_COMPONENT_ID not set");
             let runtime_loop_worker = ApiRuntimeLoop::new(&GolemRpcUri {
-                value: "worker://runtime_loop/runtime_loop_1".to_owned()
+                value: format!("urn:worker:{component_id}/runtime_loop_1")
             });
             println!("Calling loop worker to start the loop...");
-            runtime_loop_worker.blocking_start_loop();
+            runtime_loop_worker.start_loop();
             pool.spawner()
         });
     }
