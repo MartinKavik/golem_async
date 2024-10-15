@@ -91,3 +91,9 @@ dependencies = ["build-release", "post-build-release"]
 args = ["test"]
 command = "cargo-component"
 dependencies = ["clean"]
+
+# -- Extra --
+
+[tasks.golem-cli]
+command = "cargo"
+args = ["run", "--manifest-path", "../golem/golem-cli/Cargo.toml", "${@}"]
