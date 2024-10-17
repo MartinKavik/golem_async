@@ -2,3 +2,10 @@ apiVersion: core.oam.dev/v1beta1
 kind: Application
 metadata:
   name: Golem Async with Initial File System
+spec:
+  components:
+    - name: common-wasm-build
+      type: wasm-build
+      properties:
+        buildDir: out
+        include: src/components/*/golem.yaml

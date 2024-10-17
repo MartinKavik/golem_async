@@ -1,8 +1,0 @@
-component:
-  name: runtime_loop
-  type: wasm
-  properties:
-    files:
-      - sourcePath: https://picsum.photos/200/300
-        targetPath: /images/random_picture.
-        permissions: read-only
