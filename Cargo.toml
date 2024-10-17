@@ -1,5 +1,5 @@
 [workspace]
-members = ["golem_async", "runtime_loop", "golem_async-stub", "runtime_loop-stub"]
+members = ["src/components/*"]
 resolver = "2"
 
 [profile.release]

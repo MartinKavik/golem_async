@@ -74,6 +74,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
+name = "counter"
+version = "0.0.1"
+dependencies = [
+ "futures-executor",
+ "futures-signals",
+ "futures-task",
+ "golem-rust",
+ "wit-bindgen-rt",
+]
+
+[[package]]
 name = "discard"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -250,17 +261,6 @@ checksum = "6e5137fe5950679be704177c8fec9ef5d4c195bb874707d6d35035a892a9183f"
 dependencies = [
  "cargo_metadata",
  "prost-build",
- "wit-bindgen-rt",
-]
-
-[[package]]
-name = "golem_async"
-version = "0.0.1"
-dependencies = [
- "futures-executor",
- "futures-signals",
- "futures-task",
- "golem-rust",
  "wit-bindgen-rt",
 ]
 
