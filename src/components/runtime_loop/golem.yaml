@@ -7,9 +7,9 @@ spec:
     - name: runtime_loop
       type: wasm
       properties:
-        inputWasm: out/build/runtime_loop/component.wasm
-        outputWasm: out/components/runtime_loop.wasm
-        wit: src/components/runtime_loop/wit
+        inputWasm: ../../../out/build/runtime_loop/component.wasm
+        outputWasm: ../../../out/components/runtime_loop.wasm
+        wit: wit
         files:
           - sourcePath: https://picsum.photos/200/300
             targetPath: /images/random_picture.jpg

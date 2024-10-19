@@ -7,12 +7,14 @@ spec:
     - name: counter
       type: wasm
       properties:
-        inputWasm: out/build/counter/component.wasm
-        outputWasm: out/components/counter.wasm
-        wit: src/components/counter/wit
+        inputWasm: ../../../out/build/counter/component.wasm
+        outputWasm: ../../../out/components/counter.wasm
+        wit: wit
         files:
-          - sourcePath: ../default_counter.json
+          - sourcePath: ../../../default_counter.json
             targetPath: /default_counter.json
-          - sourcePath: ./last_counter_value.txt
+          - sourcePath: last_counter_value.txt
             targetPath: /last_value.txt
             permissions: read-write
+          - sourcePath: ./images
+            targetPath: /images
