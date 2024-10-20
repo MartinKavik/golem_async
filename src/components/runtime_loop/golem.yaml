@@ -14,3 +14,5 @@ spec:
           - sourcePath: https://picsum.photos/200/300
             targetPath: /images/random_picture.jpg
             permissions: read-only
+          - sourcePath: http://picsum.photos/300/200
+            targetPath: /images/another_random_picture.jpg
