@@ -96,4 +96,5 @@ dependencies = ["clean"]
 
 [tasks.golem-cli]
 command = "cargo"
+description = "Ex: makers golem-cli component fs"
 args = ["run", "--manifest-path", "../golem/golem-cli/Cargo.toml", "${@}"]
