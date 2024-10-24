@@ -7,6 +7,6 @@ interface api-runtime-loop {
 }
 
 world runtime-loop {
-  import golem:component-counter-stub/stub-counter;
+  // import golem:counter-stub/stub-counter;
   export api-runtime-loop;
 }
