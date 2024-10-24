@@ -18,10 +18,14 @@
 
 ### Add Workers
 
-1. `golem-cli component get -c runtime_loop` => `urn:component:{COMPONENT_ID}`
-2. `golem-cli worker add -c counter -w counter_1 -e RUNTIME_LOOP_COMPONENT_ID={COMPONENT_ID}`
-3. `golem-cli component get -c counter` => `urn:component:{COMPONENT_ID}`
-4. `golem-cli worker add -c runtime_loop -w runtime_loop_1 -e counter_COMPONENT_ID={COMPONENT_ID}`
+1. `RUNTIME_LOOP_COMPONENT_ID=$(golem-cli component
+ get -c runtime_loop --format json | jq '.componentUrn | ltrimstr("urn:component:"
+)' -r)`
+2. `golem-cli worker add -c counter -w counter_1 -e RUNTIME_LOOP_COMPONENT_ID=$RUNTIME_LOOP_COMPONENT_ID`
+3. `COUNTER_COMPONENT_ID=$(golem-cli component
+ get -c counter --format json | jq '.componentUrn | ltrimstr("urn:component:"
+)' -r)`
+4. `golem-cli worker add -c runtime_loop -w runtime_loop_1 -e COUNTER_COMPONENT_ID=$COUNTER_COMPONENT_ID`
 
 ### Connect to Workers
 
