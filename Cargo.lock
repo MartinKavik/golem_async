@@ -221,6 +221,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "git-version"
+version = "0.3.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1ad568aa3db0fcbc81f2f116137f263d7304f512a1209b35b85150d3ef88ad19"
+dependencies = [
+ "git-version-macro",
+]
+
+[[package]]
+name = "git-version-macro"
+version = "0.3.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "53010ccb100b96a67bc32c0175f0ed1426b31b655d562898e57325f81c023ac0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "golem-async-stub"
 version = "0.0.1"
 dependencies = [
@@ -255,12 +275,14 @@ dependencies = [
 
 [[package]]
 name = "golem-wasm-rpc"
-version = "1.0.3"
+version = "1.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6e5137fe5950679be704177c8fec9ef5d4c195bb874707d6d35035a892a9183f"
+checksum = "d3f6224b6c5298d83a9a75964f797fdc9f82238ee4aa2e7a32b8b26d345ce672"
 dependencies = [
  "cargo_metadata",
+ "git-version",
  "prost-build",
+ "uuid",
  "wit-bindgen-rt",
 ]
 

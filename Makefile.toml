@@ -1,29 +1,29 @@
 [config]
 default_to_workspace = false
 
-[tasks.add-stub-dependency-golem_async-golem_async]
-args = ["stubgen", "add-stub-dependency", "--stub-wit-root", "golem_async-stub/wit", "--dest-wit-root", "golem_async/wit", "--overwrite", "--update-cargo-toml"]
+[tasks."add-stub-dependency-src/components/counter-src/components/counter"]
+args = ["stubgen", "add-stub-dependency", "--stub-wit-root", "src/components/counter-stub/wit", "--dest-wit-root", "src/components/counter/wit", "--overwrite", "--update-cargo-toml"]
 command = "golem-cli"
 cwd = "."
-dependencies = ["generate-golem_async-stub"]
+dependencies = ["generate-src/components/counter-stub"]
 
-[tasks.add-stub-dependency-golem_async-runtime_loop]
-args = ["stubgen", "add-stub-dependency", "--stub-wit-root", "golem_async-stub/wit", "--dest-wit-root", "runtime_loop/wit", "--overwrite", "--update-cargo-toml"]
+[tasks."add-stub-dependency-src/components/counter-src/components/runtime_loop"]
+args = ["stubgen", "add-stub-dependency", "--stub-wit-root", "src/components/counter-stub/wit", "--dest-wit-root", "src/components/runtime_loop/wit", "--overwrite", "--update-cargo-toml"]
 command = "golem-cli"
 cwd = "."
-dependencies = ["generate-golem_async-stub"]
+dependencies = ["generate-src/components/counter-stub"]
 
-[tasks.add-stub-dependency-runtime_loop-golem_async]
-args = ["stubgen", "add-stub-dependency", "--stub-wit-root", "runtime_loop-stub/wit", "--dest-wit-root", "golem_async/wit", "--overwrite", "--update-cargo-toml"]
+[tasks."add-stub-dependency-src/components/runtime_loop-src/components/counter"]
+args = ["stubgen", "add-stub-dependency", "--stub-wit-root", "src/components/runtime_loop-stub/wit", "--dest-wit-root", "src/components/counter/wit", "--overwrite", "--update-cargo-toml"]
 command = "golem-cli"
 cwd = "."
-dependencies = ["generate-runtime_loop-stub"]
+dependencies = ["generate-src/components/runtime_loop-stub"]
 
-[tasks.add-stub-dependency-runtime_loop-runtime_loop]
-args = ["stubgen", "add-stub-dependency", "--stub-wit-root", "runtime_loop-stub/wit", "--dest-wit-root", "runtime_loop/wit", "--overwrite", "--update-cargo-toml"]
+[tasks."add-stub-dependency-src/components/runtime_loop-src/components/runtime_loop"]
+args = ["stubgen", "add-stub-dependency", "--stub-wit-root", "src/components/runtime_loop-stub/wit", "--dest-wit-root", "src/components/runtime_loop/wit", "--overwrite", "--update-cargo-toml"]
 command = "golem-cli"
 cwd = "."
-dependencies = ["generate-runtime_loop-stub"]
+dependencies = ["generate-src/components/runtime_loop-stub"]
 
 [tasks.build]
 args = ["build"]
@@ -42,47 +42,47 @@ dependencies = ["clean", "regenerate-stubs"]
 args = ["clean"]
 command = "cargo-component"
 
-[tasks.compose-golem_async]
-args = ["stubgen", "compose", "--source-wasm", "target/wasm32-wasi/debug/golem_async.wasm", "--stub-wasm", "target/wasm32-wasi/debug/golem_async_stub.wasm", "--stub-wasm", "target/wasm32-wasi/debug/runtime_loop_stub.wasm", "--dest-wasm", "target/wasm32-wasi/debug/golem_async_composed.wasm"]
+[tasks."compose-release-src/components/counter"]
+args = ["stubgen", "compose", "--source-wasm", "target/wasm32-wasi/release/src_components_counter.wasm", "--stub-wasm", "target/wasm32-wasi/release/src_components_counter_stub.wasm", "--stub-wasm", "target/wasm32-wasi/release/src_components_runtime_loop_stub.wasm", "--dest-wasm", "target/wasm32-wasi/release/src_components_counter_composed.wasm"]
 command = "golem-cli"
 cwd = "."
 
-[tasks.compose-release-golem_async]
-args = ["stubgen", "compose", "--source-wasm", "target/wasm32-wasi/release/golem_async.wasm", "--stub-wasm", "target/wasm32-wasi/release/golem_async_stub.wasm", "--stub-wasm", "target/wasm32-wasi/release/runtime_loop_stub.wasm", "--dest-wasm", "target/wasm32-wasi/release/golem_async_composed.wasm"]
+[tasks."compose-release-src/components/runtime_loop"]
+args = ["stubgen", "compose", "--source-wasm", "target/wasm32-wasi/release/src_components_runtime_loop.wasm", "--stub-wasm", "target/wasm32-wasi/release/src_components_counter_stub.wasm", "--stub-wasm", "target/wasm32-wasi/release/src_components_runtime_loop_stub.wasm", "--dest-wasm", "target/wasm32-wasi/release/src_components_runtime_loop_composed.wasm"]
 command = "golem-cli"
 cwd = "."
 
-[tasks.compose-release-runtime_loop]
-args = ["stubgen", "compose", "--source-wasm", "target/wasm32-wasi/release/runtime_loop.wasm", "--stub-wasm", "target/wasm32-wasi/release/golem_async_stub.wasm", "--stub-wasm", "target/wasm32-wasi/release/runtime_loop_stub.wasm", "--dest-wasm", "target/wasm32-wasi/release/runtime_loop_composed.wasm"]
+[tasks."compose-src/components/counter"]
+args = ["stubgen", "compose", "--source-wasm", "target/wasm32-wasi/debug/src_components_counter.wasm", "--stub-wasm", "target/wasm32-wasi/debug/src_components_counter_stub.wasm", "--stub-wasm", "target/wasm32-wasi/debug/src_components_runtime_loop_stub.wasm", "--dest-wasm", "target/wasm32-wasi/debug/src_components_counter_composed.wasm"]
 command = "golem-cli"
 cwd = "."
 
-[tasks.compose-runtime_loop]
-args = ["stubgen", "compose", "--source-wasm", "target/wasm32-wasi/debug/runtime_loop.wasm", "--stub-wasm", "target/wasm32-wasi/debug/golem_async_stub.wasm", "--stub-wasm", "target/wasm32-wasi/debug/runtime_loop_stub.wasm", "--dest-wasm", "target/wasm32-wasi/debug/runtime_loop_composed.wasm"]
+[tasks."compose-src/components/runtime_loop"]
+args = ["stubgen", "compose", "--source-wasm", "target/wasm32-wasi/debug/src_components_runtime_loop.wasm", "--stub-wasm", "target/wasm32-wasi/debug/src_components_counter_stub.wasm", "--stub-wasm", "target/wasm32-wasi/debug/src_components_runtime_loop_stub.wasm", "--dest-wasm", "target/wasm32-wasi/debug/src_components_runtime_loop_composed.wasm"]
 command = "golem-cli"
 cwd = "."
 
 [tasks.default]
 alias = "build"
 
-[tasks.generate-golem_async-stub]
-args = ["stubgen", "generate", "-s", "golem_async/wit", "-d", "golem_async-stub"]
+[tasks."generate-src/components/counter-stub"]
+args = ["stubgen", "generate", "-s", "src/components/counter/wit", "-d", "src/components/counter-stub"]
 command = "golem-cli"
 cwd = "."
 
-[tasks.generate-runtime_loop-stub]
-args = ["stubgen", "generate", "-s", "runtime_loop/wit", "-d", "runtime_loop-stub"]
+[tasks."generate-src/components/runtime_loop-stub"]
+args = ["stubgen", "generate", "-s", "src/components/runtime_loop/wit", "-d", "src/components/runtime_loop-stub"]
 command = "golem-cli"
 cwd = "."
 
 [tasks.post-build]
-dependencies = ["compose-golem_async", "compose-runtime_loop"]
+dependencies = ["compose-src/components/counter", "compose-src/components/runtime_loop"]
 
 [tasks.post-build-release]
-dependencies = ["compose-release-golem_async", "compose-release-runtime_loop"]
+dependencies = ["compose-release-src/components/counter", "compose-release-src/components/runtime_loop"]
 
 [tasks.regenerate-stubs]
-dependencies = ["add-stub-dependency-golem_async-golem_async", "add-stub-dependency-golem_async-runtime_loop", "add-stub-dependency-runtime_loop-golem_async", "add-stub-dependency-runtime_loop-runtime_loop"]
+dependencies = ["add-stub-dependency-src/components/counter-src/components/counter", "add-stub-dependency-src/components/counter-src/components/runtime_loop", "add-stub-dependency-src/components/runtime_loop-src/components/counter", "add-stub-dependency-src/components/runtime_loop-src/components/runtime_loop"]
 
 [tasks.release-build-flow]
 dependencies = ["build-release", "post-build-release"]
@@ -91,10 +91,3 @@ dependencies = ["build-release", "post-build-release"]
 args = ["test"]
 command = "cargo-component"
 dependencies = ["clean"]
-
-# -- Extra --
-
-[tasks.golem-cli]
-command = "cargo"
-description = "Ex: makers golem-cli component fs"
-args = ["run", "--manifest-path", "../golem/golem-cli/Cargo.toml", "${@}"]

@@ -11,28 +11,28 @@ world = "wasm-rpc-stub-runtime-loop"
 path = "wit"
 
 [package.metadata.component.target.dependencies."golem:component"]
-path = 'wit/deps\golem_component'
+path = "wit/deps/golem_component"
 
 [package.metadata.component.target.dependencies."golem:component-golem-async"]
-path = 'wit/deps\golem_component-golem-async'
+path = "wit/deps/golem_component-golem-async"
 
 [package.metadata.component.target.dependencies."golem:component-golem-async-stub"]
-path = 'wit/deps\golem_component-golem-async-stub'
+path = "wit/deps/golem_component-golem-async-stub"
 
 [package.metadata.component.target.dependencies."golem:component-runtime-loop"]
 path = "wit/deps/golem_component-runtime-loop"
 
 [package.metadata.component.target.dependencies."golem:component-stub"]
-path = 'wit/deps\golem_component-stub'
+path = "wit/deps/golem_component-stub"
 
 [package.metadata.component.target.dependencies."golem:rpc"]
-path = 'wit/deps\wasm-rpc'
+path = "wit/deps/wasm-rpc"
 
 [package.metadata.component.target.dependencies."wasi:io"]
-path = 'wit/deps\io'
+path = "wit/deps/io"
 
 [dependencies.golem-wasm-rpc]
-version = "1.0.3"
+version = "1.0.7"
 features = ["stub"]
 default-features = false
 
