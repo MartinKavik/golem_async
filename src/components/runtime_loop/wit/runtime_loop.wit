@@ -7,6 +7,5 @@ interface api-runtime-loop {
 }
 
 world runtime-loop {
-  import golem:component-golem-async-stub/stub-golem-async;
   export api-runtime-loop;
 }

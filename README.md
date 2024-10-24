@@ -8,13 +8,13 @@
 
 #### Debug
 1. `makers build-flow`
-2. `golem-cli component add -y -c counter target/wasm32-wasi/debug/counter_composed.wasm`
-3. `golem-cli component add -y -c runtime_loop target/wasm32-wasi/debug/runtime_loop_composed.wasm`
+2. `golem-cli component add -y -c counter target/wasm32-wasip1/debug/counter_composed.wasm`
+3. `golem-cli component add -y -c runtime_loop target/wasm32-wasip1/debug/runtime_loop_composed.wasm`
 
 #### Release
 1. `makers release-build-flow`
-2. `golem-cli component add -y -c counter target/wasm32-wasi/release/counter_composed.wasm`
-3. `golem-cli component add -y -c runtime_loop target/wasm32-wasi/release/runtime_loop_composed.wasm`
+2. `golem-cli component add -y -c counter target/wasm32-wasip1/release/counter_composed.wasm`
+3. `golem-cli component add -y -c runtime_loop target/wasm32-wasip1/release/runtime_loop_composed.wasm`
 
 ### Add Workers
 
@@ -30,8 +30,8 @@
 
 ### Call Workers
 
-1. `golem-cli worker invoke-and-await -c counter -w counter_1 -f 'golem:component-golem-async/api-golem-async.{add}' -a '2'`
-2. `golem-cli worker invoke-and-await -c counter -w counter_1 -f 'golem:component-golem-async/api-golem-async.{get}'`
+1. `golem-cli worker invoke-and-await -c counter -w counter_1 -f 'golem:component-counter/api-counter.{add}' -a '2'`
+2. `golem-cli worker invoke-and-await -c counter -w counter_1 -f 'golem:component-counter/api-counter.{get}'`
 
 ---
 
@@ -39,11 +39,11 @@
 
 #### Debug
 
-- `makers build-flow && golem-cli component add -y -c counter target/wasm32-wasi/debug/counter_composed.wasm && golem-cli component redeploy -y -c counter && golem-cli component add -y -c runtime_loop target/wasm32-wasi/debug/runtime_loop_composed.wasm && golem-cli component redeploy -y -c runtime_loop`
+- `makers build-flow && golem-cli component add -y -c counter target/wasm32-wasip1/debug/counter_composed.wasm && golem-cli component redeploy -y -c counter && golem-cli component add -y -c runtime_loop target/wasm32-wasip1/debug/runtime_loop_composed.wasm && golem-cli component redeploy -y -c runtime_loop`
 
 #### Release
 
-- `makers release-build-flow && golem-cli component add -y -c counter target/wasm32-wasi/release/counter_composed.wasm && golem-cli component redeploy -y -c counter && golem-cli component add -y -c runtime_loop target/wasm32-wasi/release/runtime_loop_composed.wasm && golem-cli component redeploy -y -c runtime_loop`
+- `makers release-build-flow && golem-cli component add -y -c counter target/wasm32-wasip1/release/counter_composed.wasm && golem-cli component redeploy -y -c counter && golem-cli component add -y -c runtime_loop target/wasm32-wasip1/release/runtime_loop_composed.wasm && golem-cli component redeploy -y -c runtime_loop`
 
 ### How to join the components
 

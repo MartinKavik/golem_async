@@ -1,5 +1,5 @@
 [workspace]
-members = ["src/components/*", "src/components/counter-stub", "src/components/runtime_loop-stub"]
+members = ["src/components/*"]
 resolver = "2"
 
 [profile.release]

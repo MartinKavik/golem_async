@@ -3,30 +3,6 @@ name = "counter"
 version = "0.0.1"
 edition = "2021"
 
-[package.metadata.component.target]
-path = "wit"
-
-[package.metadata.component.target.dependencies."golem:component"]
-path = "wit/deps/golem_component"
-
-[package.metadata.component.target.dependencies."golem:component-golem-async-stub"]
-path = "wit/deps/golem_component-golem-async-stub"
-
-[package.metadata.component.target.dependencies."golem:component-runtime-loop"]
-path = "wit/deps/golem_component-runtime-loop"
-
-[package.metadata.component.target.dependencies."golem:component-runtime-loop-stub"]
-path = "wit/deps/golem_component-runtime-loop-stub"
-
-[package.metadata.component.target.dependencies."golem:component-stub"]
-path = "wit/deps/golem_component-stub"
-
-[package.metadata.component.target.dependencies."golem:rpc"]
-path = "wit/deps/wasm-rpc"
-
-[package.metadata.component.target.dependencies."wasi:io"]
-path = "wit/deps/io"
-
 [dependencies]
 futures-executor = "0.3.30"
 futures-signals = "0.3.34"
