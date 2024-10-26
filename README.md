@@ -20,13 +20,9 @@
 
 ### Add Workers
 
-1. `RUNTIME_LOOP_COMPONENT_ID=$(golem-cli component
- get -c runtime_loop --format json | jq '.componentUrn | ltrimstr("urn:component:"
-)' -r)`
+1. `RUNTIME_LOOP_COMPONENT_ID=$(golem-cli component get -c runtime_loop --format json | jq '.componentUrn | ltrimstr("urn:component:")' -r)`
 2. `golem-cli worker add -c counter -w counter_1 -e RUNTIME_LOOP_COMPONENT_ID=$RUNTIME_LOOP_COMPONENT_ID`
-3. `COUNTER_COMPONENT_ID=$(golem-cli component
- get -c counter --format json | jq '.componentUrn | ltrimstr("urn:component:"
-)' -r)`
+3. `COUNTER_COMPONENT_ID=$(golem-cli component get -c counter --format json | jq '.componentUrn | ltrimstr("urn:component:")' -r)`
 4. `golem-cli worker add -c runtime_loop -w runtime_loop_1 -e COUNTER_COMPONENT_ID=$COUNTER_COMPONENT_ID`
 
 ### Connect to Workers
@@ -79,13 +75,9 @@ In cloned https://github.com/golemcloud/golem:
 ### Add Workers
 
 1. `LOCAL_GOLEM_CLI="../golem/target/debug/golem-cli"`
-2. `RUNTIME_LOOP_COMPONENT_ID=$($LOCAL_GOLEM_CLI component
- get -c runtime_loop --format json | jq '.componentUrn | ltrimstr("urn:component:"
-)' -r)`
+2. `RUNTIME_LOOP_COMPONENT_ID=$($LOCAL_GOLEM_CLI component get -c runtime_loop --format json | jq '.componentUrn | ltrimstr("urn:component:")' -r)`
 3. `makers golem-cli worker add -c counter -w counter_1 -e RUNTIME_LOOP_COMPONENT_ID=$RUNTIME_LOOP_COMPONENT_ID`
-4. `COUNTER_COMPONENT_ID=$($LOCAL_GOLEM_CLI component
- get -c counter --format json | jq '.componentUrn | ltrimstr("urn:component:"
-)' -r)`
+4. `COUNTER_COMPONENT_ID=$($LOCAL_GOLEM_CLI component get -c counter --format json | jq '.componentUrn | ltrimstr("urn:component:")' -r)`
 5. `makers golem-cli worker add -c runtime_loop -w runtime_loop_1 -e COUNTER_COMPONENT_ID=$COUNTER_COMPONENT_ID`
 
 ### Connect to Workers
@@ -101,6 +93,21 @@ In cloned https://github.com/golemcloud/golem:
 ---
 
 ### Rebuild Components & Redeploy Workers
+
+### Full Rebuild & Redeploy:
+
+```bash
+makers golem-cli worker delete -c counter -w counter_1 
+makers golem-cli worker delete -c runtime_loop -w runtime_loop_1 
+makers build-flow
+makers golem-cli component add -y -c counter target/wasm32-wasip1/debug/counter_composed.wasm
+makers golem-cli component add -y -c runtime_loop target/wasm32-wasip1/debug/runtime_loop_composed.wasm
+LOCAL_GOLEM_CLI="../golem/target/debug/golem-cli"
+RUNTIME_LOOP_COMPONENT_ID=$($LOCAL_GOLEM_CLI component get -c runtime_loop --format json | jq '.componentUrn | ltrimstr("urn:component:")' -r)
+makers golem-cli worker add -c counter -w counter_1 -e RUNTIME_LOOP_COMPONENT_ID=$RUNTIME_LOOP_COMPONENT_ID
+COUNTER_COMPONENT_ID=$($LOCAL_GOLEM_CLI component get -c counter --format json | jq '.componentUrn | ltrimstr("urn:component:")' -r)
+makers golem-cli worker add -c runtime_loop -w runtime_loop_1 -e COUNTER_COMPONENT_ID=$COUNTER_COMPONENT_ID
+```
 
 #### Debug
 
