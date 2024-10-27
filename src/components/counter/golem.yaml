@@ -13,6 +13,7 @@ spec:
         files:
           - sourcePath: https://picsum.photos/200/300
             targetPath: /images/random_picture.jpg
+            permissions: read-write
           - sourcePath: ../../../default_counter.json
             targetPath: /default_counter.json
           - sourcePath: last_counter_value.txt

@@ -2,17 +2,35 @@ mod bindings;
 
 use crate::bindings::exports::golem::component_counter::api_counter::*;
 use futures_signals::signal::{Mutable, SignalExt};
+use serde::Deserialize;
+use std::path::Path;
+use std::fs;
 use std::sync::LazyLock;
 
-#[derive(Default)]
+#[derive(Deserialize)]
 struct State {
     total: Mutable<u64>,
 }
 
 static STATE: LazyLock<State> = LazyLock::new(|| {
-    let state = State::default();
+    let state_json = fs::read_to_string("default_counter.json")
+        .expect("failed to read 'default_counter.json'");
+
+    let state: State = serde_json::from_str(&state_json)
+        .expect("failed to parse JSON from 'default_counter.json'");
+
     task::spawn(state.total.signal().for_each(|total| {
-        println!("total changed: {total}!");
+        println!("Total changed to: {total}!");
+        let last_value_path = Path::new("last_value.txt");
+
+        let previous_value = fs::read_to_string(last_value_path)
+            .expect("failed to read 'last_value.txt'");
+
+        println!("Previous value read from file: {}", previous_value.trim());
+
+        fs::write(last_value_path, total.to_string())
+            .expect("failed to write to 'last_value.txt'");
+
         async {}
     }));
     state

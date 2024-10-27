@@ -81,6 +81,8 @@ dependencies = [
  "futures-signals",
  "futures-task",
  "golem-rust",
+ "serde",
+ "serde_json",
  "wit-bindgen-rt",
 ]
 
