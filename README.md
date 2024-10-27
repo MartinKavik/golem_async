@@ -90,6 +90,11 @@ In cloned https://github.com/golemcloud/golem:
 1. `makers golem-cli worker invoke-and-await -c counter -w counter_1 -f 'golem:component-counter/api-counter.{add}' -a '2'`
 2. `makers golem-cli worker invoke-and-await -c counter -w counter_1 -f 'golem:component-counter/api-counter.{get}'`
 
+### Call Worker Files API
+
+1. Add workers + set env vars (see `Add Workers` above)
+2. `curl http://localhost:9881/v1/components/$COUNTER_COMPONENT_ID/workers/counter_1/files -s | jq .`
+
 ---
 
 ### Rebuild Components & Redeploy Workers
