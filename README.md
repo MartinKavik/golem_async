@@ -1,57 +1,16 @@
 # Golem Async
 
-## With official `golem-cli` and `docker-compose`
+This is a [Golem](https://www.golem.cloud/) testing example. It consists two _Components_ and two associated _Workers_ talking to each other. 
 
-### Start Golem
+The `counter` component (`counter_1` worker) increments its value or returns its current value on an API call. It _reactively_ (see https://crates.io/crates/futures-signals) writes the latest counter value into a file. The _Futures_ used in the `counter` component to support reactivity are driven by a simpler async runtime from the [futures-executor](https://crates.io/crates/futures-executor) crate.
 
-- `docker-compose -f docker-compose-postgres.yaml up`
+The `runtime_loop` component - respectively the `runtime_loop_1` worker - calls `counter_1` API in a loop to try to drive pending futures. The loop iterates every 2 seconds currently.
 
-### Build & Add Components
+There are two ways to run the example - with the released Golem tools and Docker files or with cloned [Golem repo](https://github.com/golemcloud/golem). You have to clone both Golem repo and this repo into the same parent directory to not brake predefine script paths.
 
-#### Debug
-1. `makers -e OFFICIAL=1 build-flow`
-2. `golem-cli component add -y -c counter target/wasm32-wasip1/debug/counter_composed.wasm`
-3. `golem-cli component add -y -c runtime_loop target/wasm32-wasip1/debug/runtime_loop_composed.wasm`
+The code was mostly tested on `Kubuntu 24.04` and `Rust 1.82.0` with a specific forked Golem branch so expect some potential issues if you try to run it. Golem currently needs some services like Redis to run and it doesn't fully support Windows. Consult their docs for more info.
 
-#### Release
-1. `makers -e OFFICIAL=1 release-build-flow`
-2. `golem-cli component add -y -c counter target/wasm32-wasip1/release/counter_composed.wasm`
-3. `golem-cli component add -y -c runtime_loop target/wasm32-wasip1/release/runtime_loop_composed.wasm`
-
-### Add Workers
-
-1. `RUNTIME_LOOP_COMPONENT_ID=$(golem-cli component get -c runtime_loop --format json | jq '.componentUrn | ltrimstr("urn:component:")' -r)`
-2. `golem-cli worker add -c counter -w counter_1 -e RUNTIME_LOOP_COMPONENT_ID=$RUNTIME_LOOP_COMPONENT_ID`
-3. `COUNTER_COMPONENT_ID=$(golem-cli component get -c counter --format json | jq '.componentUrn | ltrimstr("urn:component:")' -r)`
-4. `golem-cli worker add -c runtime_loop -w runtime_loop_1 -e COUNTER_COMPONENT_ID=$COUNTER_COMPONENT_ID`
-
-### Connect to Workers
-
-1. `golem-cli worker connect -c counter -w counter_1`
-2. `golem-cli worker connect -c runtime_loop -w runtime_loop_1`
-
-### Call Workers
-
-1. `golem-cli worker invoke-and-await -c counter -w counter_1 -f 'golem:component-counter/api-counter.{add}' -a '2'`
-2. `golem-cli worker invoke-and-await -c counter -w counter_1 -f 'golem:component-counter/api-counter.{get}'`
-
----
-
-### Rebuild Components & Redeploy Workers
-
-#### Debug
-
-- `makers -e OFFICIAL=1 build-flow && golem-cli component add -y -c counter target/wasm32-wasip1/debug/counter_composed.wasm && golem-cli component redeploy -y -c counter && golem-cli component add -y -c runtime_loop target/wasm32-wasip1/debug/runtime_loop_composed.wasm && golem-cli component redeploy -y -c runtime_loop`
-
-#### Release
-
-- `makers -e OFFICIAL=1 release-build-flow && golem-cli component add -y -c counter target/wasm32-wasip1/release/counter_composed.wasm && golem-cli component redeploy -y -c counter && golem-cli component add -y -c runtime_loop target/wasm32-wasip1/release/runtime_loop_composed.wasm && golem-cli component redeploy -y -c runtime_loop`
-
-### How to join the components
-
-1. `golem-cli stubgen initialize-workspace --targets src/components/counter --targets src/components/runtime_loop --callers src/components/counter --callers src/components/runtime_loop`
-
----
+_Note_: `makers` is the alternative executable of the script runner [cargo-make](https://crates.io/crates/cargo-make).
 
 ## With local `golem-cli` and Golem services (without Docker)
 
@@ -125,3 +84,56 @@ makers golem-cli worker add -c runtime_loop -w runtime_loop_1 -e COUNTER_COMPONE
 ### How to join the components
 
 1. `makers golem-cli stubgen initialize-workspace --targets src/components/counter --targets src/components/runtime_loop --callers src/components/counter --callers src/components/runtime_loop`
+
+---
+
+## With official `golem-cli` and `docker-compose`
+
+### Start Golem
+
+- `docker-compose -f docker-compose-postgres.yaml up`
+
+### Build & Add Components
+
+#### Debug
+1. `makers -e OFFICIAL=1 build-flow`
+2. `golem-cli component add -y -c counter target/wasm32-wasip1/debug/counter_composed.wasm`
+3. `golem-cli component add -y -c runtime_loop target/wasm32-wasip1/debug/runtime_loop_composed.wasm`
+
+#### Release
+1. `makers -e OFFICIAL=1 release-build-flow`
+2. `golem-cli component add -y -c counter target/wasm32-wasip1/release/counter_composed.wasm`
+3. `golem-cli component add -y -c runtime_loop target/wasm32-wasip1/release/runtime_loop_composed.wasm`
+
+### Add Workers
+
+1. `RUNTIME_LOOP_COMPONENT_ID=$(golem-cli component get -c runtime_loop --format json | jq '.componentUrn | ltrimstr("urn:component:")' -r)`
+2. `golem-cli worker add -c counter -w counter_1 -e RUNTIME_LOOP_COMPONENT_ID=$RUNTIME_LOOP_COMPONENT_ID`
+3. `COUNTER_COMPONENT_ID=$(golem-cli component get -c counter --format json | jq '.componentUrn | ltrimstr("urn:component:")' -r)`
+4. `golem-cli worker add -c runtime_loop -w runtime_loop_1 -e COUNTER_COMPONENT_ID=$COUNTER_COMPONENT_ID`
+
+### Connect to Workers
+
+1. `golem-cli worker connect -c counter -w counter_1`
+2. `golem-cli worker connect -c runtime_loop -w runtime_loop_1`
+
+### Call Workers
+
+1. `golem-cli worker invoke-and-await -c counter -w counter_1 -f 'golem:component-counter/api-counter.{add}' -a '2'`
+2. `golem-cli worker invoke-and-await -c counter -w counter_1 -f 'golem:component-counter/api-counter.{get}'`
+
+---
+
+### Rebuild Components & Redeploy Workers
+
+#### Debug
+
+- `makers -e OFFICIAL=1 build-flow && golem-cli component add -y -c counter target/wasm32-wasip1/debug/counter_composed.wasm && golem-cli component redeploy -y -c counter && golem-cli component add -y -c runtime_loop target/wasm32-wasip1/debug/runtime_loop_composed.wasm && golem-cli component redeploy -y -c runtime_loop`
+
+#### Release
+
+- `makers -e OFFICIAL=1 release-build-flow && golem-cli component add -y -c counter target/wasm32-wasip1/release/counter_composed.wasm && golem-cli component redeploy -y -c counter && golem-cli component add -y -c runtime_loop target/wasm32-wasip1/release/runtime_loop_composed.wasm && golem-cli component redeploy -y -c runtime_loop`
+
+### How to join the components
+
+1. `golem-cli stubgen initialize-workspace --targets src/components/counter --targets src/components/runtime_loop --callers src/components/counter --callers src/components/runtime_loop`
