@@ -2,13 +2,13 @@
 
 This is a [Golem](https://www.golem.cloud/) testing example. It consists two _Components_ and two associated _Workers_ talking to each other. 
 
-The `counter` component (`counter_1` worker) increments its value or returns its current value on an API call. It _reactively_ (see https://crates.io/crates/futures-signals) writes the latest counter value into a file. The _Futures_ used in the `counter` component to support reactivity are driven by a simpler async runtime from the [futures-executor](https://crates.io/crates/futures-executor) crate.
+The `counter` component (`counter_1` worker) increments its value or returns its current value on an API call. It _reactively_ (see the crate [futures-signals](https://crates.io/crates/futures-signals)) writes the latest counter value into a file. The _Futures_ used in the `counter` component to support reactivity are driven by a simpler async runtime from the [futures-executor](https://crates.io/crates/futures-executor) crate.
 
-The `runtime_loop` component - respectively the `runtime_loop_1` worker - calls `counter_1` API in a loop to try to drive pending futures. The loop iterates every 2 seconds currently.
+The `runtime_loop` component - respectively the `runtime_loop_1` worker - calls `counter_1` API in a loop to drive pending futures. The loop iterates every 2 seconds currently.
 
 There are two ways to run the example - with the released Golem tools and Docker files or with cloned [Golem repo](https://github.com/golemcloud/golem). You have to clone both Golem repo and this repo into the same parent directory to not brake predefine script paths.
 
-The code was mostly tested on `Kubuntu 24.04` and `Rust 1.82.0` with a specific forked Golem branch so expect some potential issues if you try to run it. Golem currently needs some services like Redis to run and it doesn't fully support Windows. Consult their docs for more info.
+The code was mostly tested on `Kubuntu 24.04` and `Rust 1.82.0` with a specific forked Golem [branch](https://github.com/MartinKavik/golem/tree/initial_file_system) so expect some potential issues if you try to run it. Golem currently needs some services like Redis to run and it doesn't fully support Windows. Consult their docs for more info.
 
 _Note_: `makers` is the alternative executable of the script runner [cargo-make](https://crates.io/crates/cargo-make).
 
@@ -16,8 +16,7 @@ _Note_: `makers` is the alternative executable of the script runner [cargo-make]
 
 ### Start Golem
 
-In cloned https://github.com/golemcloud/golem:
-- `makers run`
+1. In the cloned Golem root dir: `makers run`
 
 ### Build & Add Components
 

@@ -26,7 +26,7 @@ path = "wit/deps/wasm-rpc"
 path = "wit/deps/io"
 
 [dependencies.golem-wasm-rpc]
-version = "1.0.5"
+version = "1.0.7"
 features = ["stub"]
 default-features = false
 
