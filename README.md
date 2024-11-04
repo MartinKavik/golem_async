@@ -52,7 +52,7 @@ _Note_: `makers` is the alternative executable of the script runner [cargo-make]
 
 1. Add workers + set env vars (see `Add Workers` above)
 2. `curl "http://localhost:9881/v1/components/$COUNTER_COMPONENT_ID/workers/counter_1/files?recursive=true" -s | jq .`
-3. `curl "http://localhost:9881/v1/components/$COUNTER_COMPONENT_ID/workers/counter_1/files?path=default_counter.json" -s | jq .`
+3. `curl "http://localhost:9881/v1/components/$COUNTER_COMPONENT_ID/workers/counter_1/files?path=last_value.txt" -s`
 4. `curl "http://localhost:9881/v1/components/$COUNTER_COMPONENT_ID/workers/counter_1/files?path=images/random_picture.jpg" -JO --clobber --create-dirs --output-dir "test_data"`
 5. See the downloaded file in the `test_data` folder
 

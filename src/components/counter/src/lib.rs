@@ -3,9 +3,13 @@ mod bindings;
 use crate::bindings::exports::golem::component_counter::api_counter::*;
 use futures_signals::signal::{Mutable, SignalExt};
 use serde::Deserialize;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::fs;
 use std::sync::LazyLock;
+
+fn read_only_file_path(relative_file_path: impl AsRef<Path>) -> PathBuf {
+    Path::new("/system/component/current/files").join(relative_file_path)
+}
 
 #[derive(Deserialize)]
 struct State {
@@ -13,13 +17,24 @@ struct State {
 }
 
 static STATE: LazyLock<State> = LazyLock::new(|| {
-    let state_json = fs::read_to_string("default_counter.json")
-        .expect("failed to read 'default_counter.json'");
+    let state_json_path = read_only_file_path("default_counter.json");
+    let state_json = fs::read_to_string(&state_json_path)
+        .map_err(|error| {
+            eprintln!("failed to read 'default_counter.json': {error:#}")
+        })
+        .unwrap_or_else(|_| String::from("{ \"total\": 22 }"));
 
     let state: State = serde_json::from_str(&state_json)
         .expect("failed to parse JSON from 'default_counter.json'");
 
-    task::spawn(state.total.signal().for_each(|total| {
+    task::spawn(state.total.signal().for_each(move |total| {
+        println!("--------");
+
+        match fs::read_to_string(read_only_file_path(&state_json_path)){
+            Ok(content) => println!("Content of 'default_counter.json': {content}"),
+            Err(error) => eprintln!("Failed to read 'default_counter.json': {error:#}")
+        }
+
         println!("Total changed to: {total}!");
         let last_value_path = Path::new("last_value.txt");
 
